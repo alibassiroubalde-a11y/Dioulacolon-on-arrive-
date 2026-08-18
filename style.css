@@ -1,367 +1,759 @@
-/* Réglages généraux */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
+/* =========================================
+   RÃ‰GLAGES GÃ‰NÃ‰RAUX
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-html{
-    scroll-behavior:smooth;
+html {
+    scroll-behavior: smooth;
 }
 
-body{
-    background:#f4f4f4;
-    color:#333;
-}
-
-
-/* Barre de navigation */
-.navbar{
-    position:fixed;
-    top:0;
-    width:100%;
-    background:white;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 40px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    z-index:1000;
-}
-
-.logo h2{
-    color:#008000;
+body {
+    background: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
 }
 
 
-.menu{
-    list-style:none;
-    display:flex;
-    gap:20px;
+/* =========================================
+   BARRE DE NAVIGATION
+========================================= */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    background: white;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 40px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    z-index: 1000;
 }
 
 
-.menu a{
-    text-decoration:none;
-    color:#008000;
-    font-weight:bold;
+/* Logo */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.logo h2 {
+    color: #008000;
+    font-size: 20px;
 }
 
 
-/* Grande bannière */
-.hero{
+/* Menu */
 
-    height:100vh;
+.menu {
+    list-style: none;
+
+    display: flex;
+
+    gap: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+
+    color: #008000;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    color: #25D366;
+}
+
+
+/* =========================================
+   BANNIÃˆRE D'ACCUEIL
+========================================= */
+
+.hero {
+    min-height: 100vh;
 
     background:
-    linear-gradient(
-    rgba(0,128,0,0.7),
-    rgba(0,0,0,0.5)
-    ),
-    url("image-dioulacolon.jpeg");
+        linear-gradient(
+            rgba(0, 128, 0, 0.7),
+            rgba(0, 0, 0, 0.5)
+        ),
+        url("images/image-dioulacolon.jpeg");
 
-    background-size:cover;
-    background-position:center;
+    background-size: cover;
+    background-position: center;
 
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+    display: flex;
 
-    text-align:center;
-    color:white;
+    flex-direction: column;
 
-    padding:20px;
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    color: white;
+
+    padding: 120px 20px 50px;
 }
 
 
-.hero h1{
-    font-size:50px;
+.hero h1 {
+    font-size: 50px;
+
+    margin-bottom: 10px;
 }
 
 
-.hero h2{
-    font-size:35px;
-    margin:20px;
+.hero h2 {
+    font-size: 35px;
+
+    margin: 15px;
 }
 
 
-.hero p{
-    font-size:22px;
-    max-width:700px;
+.hero p {
+    font-size: 22px;
+
+    max-width: 700px;
+
+    margin-bottom: 20px;
 }
 
 
+/* =========================================
+   BOUTONS DE L'ACCUEIL
+========================================= */
 
-/* Boutons */
-.hero a{
+.hero a {
+    display: inline-block;
 
-    display:inline-block;
+    margin: 8px;
 
-    margin:15px;
+    padding: 14px 25px;
 
-    padding:14px 25px;
+    border-radius: 8px;
 
-    border-radius:8px;
+    background: #25D366;
 
-    background:#25D366;
+    color: white;
 
-    color:white;
+    text-decoration: none;
 
-    text-decoration:none;
+    font-weight: bold;
 
-    font-weight:bold;
+    transition: 0.3s;
 }
 
 
-.hero a:last-child{
+.hero a:hover {
+    transform: translateY(-2px);
 
-    background:#1877F2;
-
+    opacity: 0.9;
 }
 
 
+/* Facebook */
 
-/* Téléphone */
-@media(max-width:768px){
-
-.navbar{
-
-    flex-direction:column;
-
-}
-
-.menu{
-
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-}
-
-.hero h1{
-
-    font-size:35px;
-
-}
-
-.hero h2{
-
-    font-size:25px;
-
-}
-
-}
-.photo-profil{
-
-width:200px;
-
-height:200px;
-
-object-fit:cover;
-
-border-radius:50%;
-
-margin:20px;
-
+.hero a:last-child {
+    background: #1877F2;
 }
 
 
-.galerie{
+/* =========================================
+   SECTIONS
+========================================= */
 
-display:flex;
+.section {
+    padding: 90px 20px;
 
-justify-content:center;
-
-flex-wrap:wrap;
-
-gap:20px;
-
+    text-align: center;
 }
 
 
-.galerie img{
+.section h2 {
+    color: #008000;
 
-width:300px;
+    font-size: 32px;
 
-height:500px;
-
-object-fit:cover;
-
-border-radius:10px;
-
+    margin-bottom: 25px;
 }
-/* FORMULAIRE D'ADHÉSION */
+
+
+.section p {
+    max-width: 850px;
+
+    margin: 10px auto;
+
+    font-size: 17px;
+}
+
+
+/* =========================================
+   CARTES DU PROGRAMME
+========================================= */
+
+.cartes {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: stretch;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    max-width: 1200px;
+
+    margin: 30px auto;
+}
+
+
+.carte {
+    background: white;
+
+    width: 260px;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.1);
+
+    transition: 0.3s;
+}
+
+
+.carte:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.carte h3 {
+    color: #008000;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================================
+   PHOTO DE PROFIL
+========================================= */
+
+.photo-profil {
+    width: 200px;
+
+    height: 200px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    margin: 20px;
+
+    border: 5px solid white;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================================
+   GALERIE
+========================================= */
+
+.galerie {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    max-width: 1200px;
+
+    margin: 30px auto;
+}
+
+
+.galerie img {
+    width: 300px;
+
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.15);
+
+    transition: 0.3s;
+}
+
+
+.galerie img:hover {
+    transform: scale(1.03);
+}
+
+
+/* =========================================
+   FORMULAIRE D'ADHÃ‰SION
+========================================= */
 
 .adhesion {
-    background:#f5f5f5;
+    background: #f5f5f5;
 }
+
 
 .adhesion .intro {
-    max-width:700px;
-    margin:0 auto 30px;
-    text-align:center;
-    line-height:1.6;
+    max-width: 700px;
+
+    margin: 0 auto 30px;
+
+    text-align: center;
+
+    line-height: 1.6;
 }
+
 
 #formAdhesion {
-    max-width:600px;
-    margin:auto;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    max-width: 600px;
+
+    margin: auto;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.1);
+
+    text-align: left;
 }
 
+
+/* Labels */
+
 #formAdhesion label {
-    display:block;
-    margin-top:15px;
-    margin-bottom:7px;
-    font-weight:bold;
+    display: block;
+
+    margin-top: 15px;
+
+    margin-bottom: 7px;
+
+    font-weight: bold;
 }
+
+
+/* Champs */
 
 #formAdhesion input[type="text"],
 #formAdhesion input[type="tel"],
 #formAdhesion select,
 #formAdhesion textarea {
-    width:100%;
-    padding:13px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
+    width: 100%;
+
+    padding: 13px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    background: white;
 }
 
+
+/* Zone message */
+
 #formAdhesion textarea {
-    height:120px;
-    resize:vertical;
+    height: 120px;
+
+    resize: vertical;
 }
+
+
+/* Choix Oui / Non */
 
 .choix {
-    display:flex;
-    gap:30px;
+    display: flex;
+
+    gap: 30px;
+
+    align-items: center;
 }
+
 
 .choix label {
-    font-weight:normal !important;
+    font-weight: normal !important;
+
+    margin-top: 5px !important;
+
+    display: flex !important;
+
+    align-items: center;
+
+    gap: 5px;
 }
+
+
+/* Case de confirmation */
 
 .confirmation {
-    font-weight:normal !important;
+    font-weight: normal !important;
+
+    display: flex !important;
+
+    align-items: center;
+
+    gap: 8px;
 }
+
+
+/* Bouton du formulaire */
 
 #formAdhesion button {
-    width:100%;
-    margin-top:25px;
-    padding:15px;
-    border:none;
-    border-radius:8px;
-    background:#25D366;
-    color:white;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #25D366;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
 }
+
 
 #formAdhesion button:hover {
-    background:#128C7E;
-}
-form{
-max-width:600px;
-margin:auto;
-display:flex;
-flex-direction:column;
-gap:15px;
+    background: #128C7E;
+
+    transform: translateY(-2px);
 }
 
-input,
-textarea{
-padding:12px;
-border:1px solid #ccc;
-border-radius:8px;
-font-size:16px;
+
+/* =========================================
+   BOUTONS CONTACT
+========================================= */
+
+.btn-contact,
+.btn-whatsapp,
+.btn-facebook {
+    display: inline-block;
+
+    margin: 8px;
+
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
 }
 
-button{
-padding:15px;
-background:#008000;
-color:white;
-border:none;
-border-radius:8px;
-font-size:18px;
-cursor:pointer;
-}
-/* FORMULAIRE D'ADHÉSION */
 
-.adhesion {
-    background:#f5f5f5;
+.btn-contact {
+    background: #008000;
 }
 
-.adhesion .intro {
-    max-width:700px;
-    margin:0 auto 30px;
-    text-align:center;
-    line-height:1.6;
+
+.btn-whatsapp {
+    background: #25D366;
 }
 
-#formAdhesion {
-    max-width:600px;
-    margin:auto;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+
+.btn-facebook {
+    background: #1877F2;
 }
 
-#formAdhesion label {
-    display:block;
-    margin-top:15px;
-    margin-bottom:7px;
-    font-weight:bold;
+
+/* =========================================
+   BOUTONS FLOTTANTS
+========================================= */
+
+.whatsapp-float,
+.appel-float {
+    position: fixed;
+
+    right: 20px;
+
+    width: 55px;
+
+    height: 55px;
+
+    border-radius: 50%;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-decoration: none;
+
+    font-size: 25px;
+
+    z-index: 999;
 }
 
-#formAdhesion input[type="text"],
-#formAdhesion input[type="tel"],
-#formAdhesion select,
-#formAdhesion textarea {
-    width:100%;
-    padding:13px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
+
+.whatsapp-float {
+    bottom: 85px;
+
+    background: #25D366;
 }
 
-#formAdhesion textarea {
-    height:120px;
-    resize:vertical;
+
+.appel-float {
+    bottom: 20px;
+
+    background: #008000;
 }
 
-.choix {
-    display:flex;
-    gap:30px;
+
+/* =========================================
+   PIED DE PAGE
+========================================= */
+
+footer {
+    background: #222;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px 20px;
 }
 
-.choix label {
-    font-weight:normal !important;
+
+footer p {
+    margin: 5px auto;
 }
 
-.confirmation {
-    font-weight:normal !important;
+
+/* =========================================
+   MODE SOMBRE
+========================================= */
+
+body.sombre {
+    background: #111;
+
+    color: white;
 }
 
-#formAdhesion button {
-    width:100%;
-    margin-top:25px;
-    padding:15px;
-    border:none;
-    border-radius:8px;
-    background:#25D366;
-    color:white;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
+
+body.sombre .navbar {
+    background: #222;
 }
 
-#formAdhesion button:hover {
-    background:#128C7E;
+
+body.sombre .menu a {
+    color: #90ee90;
+}
+
+
+body.sombre .section {
+    background: #111;
+}
+
+
+body.sombre .carte,
+body.sombre #formAdhesion {
+    background: #222;
+
+    color: white;
+}
+
+
+body.sombre #formAdhesion input,
+body.sombre #formAdhesion select,
+body.sombre #formAdhesion textarea {
+    background: #333;
+
+    color: white;
+
+    border-color: #555;
+}
+
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+.section {
+    animation: apparition 0.8s ease;
+}
+
+
+@keyframes apparition {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================
+   VERSION MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        position: relative;
+
+        flex-direction: column;
+
+        padding: 15px;
+    }
+
+
+    .logo {
+        margin-bottom: 10px;
+    }
+
+
+    .logo h2 {
+        font-size: 18px;
+    }
+
+
+    .menu {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 10px;
+    }
+
+
+    .menu a {
+        font-size: 14px;
+    }
+
+
+    .hero {
+        min-height: 100vh;
+
+        padding-top: 50px;
+    }
+
+
+    .hero h1 {
+        font-size: 35px;
+    }
+
+
+    .hero h2 {
+        font-size: 25px;
+    }
+
+
+    .hero p {
+        font-size: 18px;
+    }
+
+
+    .section {
+        padding: 60px 15px;
+    }
+
+
+    .section h2 {
+        font-size: 27px;
+    }
+
+
+    .carte {
+        width: 100%;
+
+        max-width: 350px;
+    }
+
+
+    .galerie img {
+        width: 100%;
+
+        max-width: 350px;
+
+        height: 230px;
+    }
+
+
+    #formAdhesion {
+        padding: 20px;
+    }
+
+
+    .choix {
+        gap: 20px;
+    }
+
+
+    .whatsapp-float,
+    .appel-float {
+        right: 15px;
+    }
+
 }
