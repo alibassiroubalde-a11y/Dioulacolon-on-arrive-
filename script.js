@@ -1,105 +1,134 @@
+/* =========================================
+   FORMULAIRE D'ADHÉSION → WHATSAPP
+========================================= */
 
-function envoyerWhatsApp(){
-
-let nom = document.getElementById("nom").value;
-
-let telephone = document.getElementById("telephone").value;
-
-let village = document.getElementById("village").value;
-
-let message = document.getElementById("message").value;
-
-
-let texte = 
-"Nouvelle adhésion%0A%0A" +
-"Nom : " + nom + "%0A" +
-"Téléphone : " + telephone + "%0A" +
-"Village : " + village + "%0A" +
-"Message : " + message;
-
-
-let numero = "221773189802";
-
-
-let lien = 
-"https://wa.me/" + numero + "?text=" + texte;
-
-
-window.open(lien, "_blank");
-
-}
 function envoyerAdhesion(event) {
 
+    // Empêche le formulaire de recharger la page
     event.preventDefault();
 
-    const nom = document.getElementById("nom").value;
-    const telephone = document.getElementById("telephone").value;
-    const village = document.getElementById("village").value;
-    const profession = document.getElementById("profession").value;
+    // Récupération des informations
+    const nom = document.getElementById("nom").value.trim();
+    const telephone = document.getElementById("telephone").value.trim();
+    const village = document.getElementById("village").value.trim();
+    const profession = document.getElementById("profession").value.trim();
     const sexe = document.getElementById("sexe").value;
     const age = document.getElementById("age").value;
     const domaine = document.getElementById("domaine").value;
-    const message = document.getElementById("message").value;
+    const message = document.getElementById("message").value.trim();
 
-    const terrain =
-        document.querySelector('input[name="terrain"]:checked')?.value
-        || "Non précisé";
+    // Activités de terrain
+    const terrainElement =
+        document.querySelector('input[name="terrain"]:checked');
 
-    const benevole =
-        document.querySelector('input[name="benevole"]:checked')?.value
-        || "Non précisé";
+    const terrain = terrainElement
+        ? terrainElement.value
+        : "Non précisé";
 
-    const texte =
-        "📝 NOUVELLE ADHÉSION\n\n" +
-        "👤 Nom : " + nom + "\n" +
-        "📞 Téléphone : " + telephone + "\n" +
-        "📍 Village/Quartier : " + village + "\n" +
-        "💼 Profession : " + profession + "\n" +
-        "⚧ Sexe : " + sexe + "\n" +
-        "🎂 Âge : " + age + "\n" +
-        "🤝 Domaine : " + domaine + "\n" +
-        "🚶 Activités terrain : " + terrain + "\n" +
-        "🙋 Bénévole : " + benevole + "\n" +
-        "💬 Message : " + message;
+    // Bénévole
+    const benevoleElement =
+        document.querySelector('input[name="benevole"]:checked');
 
+    const benevole = benevoleElement
+        ? benevoleElement.value
+        : "Non précisé";
+
+
+    // Numéro WhatsApp qui reçoit les adhésions
     const numero = "221773189802";
 
-    const url =
-        "https://wa.me/" + numero +
-        "?text=" + encodeURIComponent(texte);
 
+    // Message WhatsApp
+    const texte =
+        "📝 NOUVELLE ADHÉSION\n\n" +
+
+        "👤 Nom et prénom : " + nom + "\n" +
+
+        "📞 Téléphone : " + telephone + "\n" +
+
+        "📍 Village / Quartier : " + village + "\n" +
+
+        "💼 Profession : " + profession + "\n" +
+
+        "⚧ Sexe : " + sexe + "\n" +
+
+        "🎂 Tranche d'âge : " + age + "\n" +
+
+        "🤝 Domaine : " + domaine + "\n" +
+
+        "🚶 Activités de terrain : " + terrain + "\n" +
+
+        "🙋 Bénévole : " + benevole + "\n" +
+
+        "💬 Message : " + message;
+
+
+    // Création du lien WhatsApp
+    const url =
+        "https://wa.me/" +
+        numero +
+        "?text=" +
+        encodeURIComponent(texte);
+
+
+    // Ouvre WhatsApp
     window.open(url, "_blank");
+
 }
+
+
+/* =========================================
+   BOUTON RETOUR EN HAUT
+========================================= */
+
+function remonter() {
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================================
+   MODE SOMBRE
+========================================= */
+
+function modeSombre() {
+
+    document.body.classList.toggle("sombre");
+
+}
+
+
+/* =========================================
+   COMPTEUR
+========================================= */
+
+// On vérifie d'abord que le compteur existe
+const compteur = document.getElementById("nombre");
+
+if (compteur) {
+
     let nombre = 0;
 
-let compteur = document.getElementById("nombre");
+    const objectif = 500;
 
-setInterval(function(){
+    const intervalle = setInterval(function () {
 
-if(nombre < 500){
+        if (nombre < objectif) {
 
-nombre++;
+            nombre++;
 
-compteur.innerHTML = nombre;
+            compteur.textContent = nombre;
 
-}
+        } else {
 
-},20);
-    function remonter(){
+            clearInterval(intervalle);
 
-window.scrollTo({
+        }
 
-top:0,
-
-behavior:"smooth"
-
-});
-
-}
-
-
-function modeSombre(){
-
-document.body.classList.toggle("sombre");
+    }, 20);
 
 }
