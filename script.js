@@ -1,21 +1,27 @@
 /* =========================================
+   SITE DIOULACOLON
+   Ali Bassirou Baldé
+========================================= */
+
+
+/* =========================================
    FORMULAIRE D'ADHÉSION → WHATSAPP
 ========================================= */
 
 function envoyerAdhesion(event) {
 
-    // Empêche le formulaire de recharger la page
     event.preventDefault();
 
-    // Récupération des informations
-    const nom = document.getElementById("nom").value.trim();
-    const telephone = document.getElementById("telephone").value.trim();
-    const village = document.getElementById("village").value.trim();
-    const profession = document.getElementById("profession").value.trim();
-    const sexe = document.getElementById("sexe").value;
-    const age = document.getElementById("age").value;
-    const domaine = document.getElementById("domaine").value;
-    const message = document.getElementById("message").value.trim();
+    // Récupération des champs
+    const nom = document.getElementById("nom")?.value.trim() || "";
+    const telephone = document.getElementById("telephone")?.value.trim() || "";
+    const village = document.getElementById("village")?.value.trim() || "";
+    const profession = document.getElementById("profession")?.value.trim() || "";
+    const sexe = document.getElementById("sexe")?.value || "Non précisé";
+    const age = document.getElementById("age")?.value || "Non précisé";
+    const domaine = document.getElementById("domaine")?.value || "Non précisé";
+    const message = document.getElementById("message")?.value.trim() || "Aucun message";
+
 
     // Activités de terrain
     const terrainElement =
@@ -24,6 +30,7 @@ function envoyerAdhesion(event) {
     const terrain = terrainElement
         ? terrainElement.value
         : "Non précisé";
+
 
     // Bénévole
     const benevoleElement =
@@ -34,11 +41,11 @@ function envoyerAdhesion(event) {
         : "Non précisé";
 
 
-    // Numéro WhatsApp qui reçoit les adhésions
+    // Numéro WhatsApp
     const numero = "221773189802";
 
 
-    // Message WhatsApp
+    // Message envoyé sur WhatsApp
     const texte =
         "📝 NOUVELLE ADHÉSION\n\n" +
 
@@ -71,7 +78,7 @@ function envoyerAdhesion(event) {
         encodeURIComponent(texte);
 
 
-    // Ouvre WhatsApp
+    // Ouverture de WhatsApp
     window.open(url, "_blank");
 
 }
@@ -106,7 +113,6 @@ function modeSombre() {
    COMPTEUR
 ========================================= */
 
-// On vérifie d'abord que le compteur existe
 const compteur = document.getElementById("nombre");
 
 if (compteur) {
@@ -117,13 +123,11 @@ if (compteur) {
 
     const intervalle = setInterval(function () {
 
-        if (nombre < objectif) {
+        nombre++;
 
-            nombre++;
+        compteur.textContent = nombre;
 
-            compteur.textContent = nombre;
-
-        } else {
+        if (nombre >= objectif) {
 
             clearInterval(intervalle);
 
@@ -132,3 +136,187 @@ if (compteur) {
     }, 20);
 
 }
+
+
+/* =========================================
+   GALERIE INTERACTIVE
+========================================= */
+
+let photosGalerie = [];
+
+let photoActuelle = 0;
+
+
+// Récupération des photos
+const imagesGalerie =
+    document.querySelectorAll(".galerie img");
+
+
+imagesGalerie.forEach(function(image, index) {
+
+    photosGalerie.push(image.src);
+
+
+    image.addEventListener("click", function() {
+
+        ouvrirGalerie(index);
+
+    });
+
+});
+
+
+/* =========================================
+   OUVRIR UNE PHOTO
+========================================= */
+
+function ouvrirGalerie(index) {
+
+    if (photosGalerie.length === 0) {
+        return;
+    }
+
+
+    photoActuelle = index;
+
+
+    const imageGrande =
+        document.getElementById("imageGrande");
+
+    const lightbox =
+        document.getElementById("lightbox");
+
+
+    if (imageGrande && lightbox) {
+
+        imageGrande.src =
+            photosGalerie[photoActuelle];
+
+        lightbox.style.display = "flex";
+
+        document.body.style.overflow = "hidden";
+
+    }
+
+}
+
+
+/* =========================================
+   FERMER LA GALERIE
+========================================= */
+
+function fermerGalerie() {
+
+    const lightbox =
+        document.getElementById("lightbox");
+
+
+    if (lightbox) {
+
+        lightbox.style.display = "none";
+
+        document.body.style.overflow = "auto";
+
+    }
+
+}
+
+
+/* =========================================
+   PHOTO SUIVANTE
+========================================= */
+
+function photoSuivante() {
+
+    if (photosGalerie.length === 0) {
+        return;
+    }
+
+
+    photoActuelle++;
+
+
+    if (photoActuelle >= photosGalerie.length) {
+
+        photoActuelle = 0;
+
+    }
+
+
+    const imageGrande =
+        document.getElementById("imageGrande");
+
+
+    if (imageGrande) {
+
+        imageGrande.src =
+            photosGalerie[photoActuelle];
+
+    }
+
+}
+
+
+/* =========================================
+   PHOTO PRÉCÉDENTE
+========================================= */
+
+function photoPrecedente() {
+
+    if (photosGalerie.length === 0) {
+        return;
+    }
+
+
+    photoActuelle--;
+
+
+    if (photoActuelle < 0) {
+
+        photoActuelle =
+            photosGalerie.length - 1;
+
+    }
+
+
+    const imageGrande =
+        document.getElementById("imageGrande");
+
+
+    if (imageGrande) {
+
+        imageGrande.src =
+            photosGalerie[photoActuelle];
+
+    }
+
+}
+
+
+/* =========================================
+   FERMER AVEC LA TOUCHE ÉCHAP
+========================================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+
+        fermerGalerie();
+
+    }
+
+
+    if (event.key === "ArrowRight") {
+
+        photoSuivante();
+
+    }
+
+
+    if (event.key === "ArrowLeft") {
+
+        photoPrecedente();
+
+    }
+
+});
