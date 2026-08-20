@@ -21,253 +21,109 @@ function envoyerAdhesion(event) {
 
     event.preventDefault();
 
-    // Récupération des champs
-    const nom =
-        document.getElementById("nom")?.value.trim() || "";
-
-    const telephone =
-        document.getElementById("telephone")?.value.trim() || "";
-
-    const village =
-        document.getElementById("village")?.value.trim() || "";
-
-    const profession =
-        document.getElementById("profession")?.value.trim() || "";
-
-    const sexe =
-        document.getElementById("sexe")?.value || "Non précisé";
-
-    const age =
-        document.getElementById("age")?.value || "Non précisé";
-
-    const domaine =
-        document.getElementById("domaine")?.value || "Non précisé";
-
-    const message =
-        document.getElementById("message")?.value.trim() ||
-        "Aucun message";
-
-
-    /* Activités de terrain */
+    const nom = document.getElementById("nom").value.trim();
+    const telephone = document.getElementById("telephone").value.trim();
+    const village = document.getElementById("village").value.trim();
+    const profession = document.getElementById("profession").value.trim();
+    const sexe = document.getElementById("sexe").value;
+    const age = document.getElementById("age").value;
+    const domaine = document.getElementById("domaine").value;
+    const message = document.getElementById("message").value.trim();
 
     const terrainElement =
-        document.querySelector(
-            'input[name="terrain"]:checked'
-        );
+        document.querySelector('input[name="terrain"]:checked');
 
     const terrain = terrainElement
         ? terrainElement.value
         : "Non précisé";
 
-
-    /* Bénévole */
-
     const benevoleElement =
-        document.querySelector(
-            'input[name="benevole"]:checked'
-        );
+        document.querySelector('input[name="benevole"]:checked');
 
     const benevole = benevoleElement
         ? benevoleElement.value
         : "Non précisé";
 
 
-    /* Vérification */
+    // =========================================
+    // ENVOI VERS GOOGLE SHEETS
+    // =========================================
 
-    if (!nom || !telephone || !village) {
+    const googleScriptURL =
+        "https://script.google.com/macros/s/AKfycbxVQ47BzkCHn0FgN4L20BFaTue1ihh-nZq2ZmKO6c9kDFp1DC7Fl4arTEXSVZHfMNj8KQ/exec";
 
-        alert(
-            "⚠️ Veuillez remplir les champs obligatoires :\n" +
-            "Nom et prénom\n" +
-            "Téléphone\n" +
-            "Village / Quartier"
-        );
-
-        return;
-    }
-
-
-    /* =========================================
-       DONNÉES POUR GOOGLE SHEETS
-    ========================================= */
 
     const donnees = {
-
         nom: nom,
-
         telephone: telephone,
-
         village: village,
-
         profession: profession,
-
         sexe: sexe,
-
         age: age,
-
         domaine: domaine,
-
         terrain: terrain,
-
         benevole: benevole,
-
         message: message
-
     };
 
 
-    /* =========================================
-       ENVOI VERS GOOGLE SHEETS
-    ========================================= */
-
-    const bouton =
-        document.querySelector(
-            "#formAdhesion button[type='submit']"
-        );
-
-
-    if (bouton) {
-
-        bouton.disabled = true;
-
-        bouton.innerHTML =
-            "⏳ Enregistrement...";
-
-    }
-
-
-    fetch(URL_GOOGLE_SHEETS, {
+    fetch(googleScriptURL, {
 
         method: "POST",
 
         mode: "no-cors",
 
         headers: {
-
-            "Content-Type":
-                "text/plain;charset=utf-8"
-
+            "Content-Type": "text/plain;charset=utf-8"
         },
 
         body: JSON.stringify(donnees)
 
-    })
-
-    .then(function() {
+    });
 
 
-        /* =========================================
-           ENVOI WHATSAPP
-        ========================================= */
+    // =========================================
+    // ENVOI VERS WHATSAPP
+    // =========================================
 
-        const numero =
-            "221773189802";
+    const numero = "221773189802";
 
-
-        const texte =
-
-            "📝 NOUVELLE ADHÉSION\n\n" +
-
-            "👤 Nom et prénom : " +
-            nom + "\n" +
-
-            "📞 Téléphone : " +
-            telephone + "\n" +
-
-            "📍 Village / Quartier : " +
-            village + "\n" +
-
-            "💼 Profession : " +
-            profession + "\n" +
-
-            "⚧ Sexe : " +
-            sexe + "\n" +
-
-            "🎂 Tranche d'âge : " +
-            age + "\n" +
-
-            "🤝 Domaine : " +
-            domaine + "\n" +
-
-            "🚶 Activités de terrain : " +
-            terrain + "\n" +
-
-            "🙋 Bénévole : " +
-            benevole + "\n" +
-
-            "💬 Message : " +
-            message;
+    const texte =
+        "📝 NOUVELLE ADHÉSION\n\n" +
+        "👤 Nom et prénom : " + nom + "\n" +
+        "📞 Téléphone : " + telephone + "\n" +
+        "📍 Village / Quartier : " + village + "\n" +
+        "💼 Profession : " + profession + "\n" +
+        "⚧ Sexe : " + sexe + "\n" +
+        "🎂 Tranche d'âge : " + age + "\n" +
+        "🤝 Domaine : " + domaine + "\n" +
+        "🚶 Activités de terrain : " + terrain + "\n" +
+        "🙋 Bénévole : " + benevole + "\n" +
+        "💬 Message : " + message;
 
 
-        const urlWhatsApp =
-
-            "https://wa.me/" +
-            numero +
-            "?text=" +
-            encodeURIComponent(texte);
-
-
-        /* Ouvrir WhatsApp */
-
-        window.open(
-            urlWhatsApp,
-            "_blank"
-        );
+    const url =
+        "https://wa.me/" +
+        numero +
+        "?text=" +
+        encodeURIComponent(texte);
 
 
-        /* Message de confirmation */
+    window.open(url, "_blank");
+
+
+    // Message de confirmation
+
+    setTimeout(function() {
 
         alert(
-            "✅ Adhésion enregistrée avec succès !\n\n" +
-            "Vos informations ont été transmises.\n" +
+            "✅ Votre adhésion a été enregistrée.\n\n" +
             "Merci pour votre participation."
         );
 
-
-        /* Réinitialiser le formulaire */
-
-        document
-            .getElementById("formAdhesion")
-            .reset();
-
-
-        if (bouton) {
-
-            bouton.disabled = false;
-
-            bouton.innerHTML =
-                "📲 Envoyer mon adhésion";
-
-        }
-
-    })
-
-
-    .catch(function(erreur) {
-
-        console.error(erreur);
-
-
-        alert(
-            "❌ Une erreur est survenue.\n\n" +
-            "Veuillez réessayer."
-        );
-
-
-        if (bouton) {
-
-            bouton.disabled = false;
-
-            bouton.innerHTML =
-                "📲 Envoyer mon adhésion";
-
-        }
-
-    });
+    }, 1000);
 
 }
-
-
 /* =========================================
    BOUTON RETOUR EN HAUT
 ========================================= */
