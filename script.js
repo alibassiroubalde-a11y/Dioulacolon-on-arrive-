@@ -5,97 +5,121 @@
 
 
 /* =========================================
-   GOOGLE SHEETS
+   GOOGLE APPS SCRIPT
 ========================================= */
 
 const URL_GOOGLE_SHEETS =
-"https://script.google.com/macros/s/AKfycbxVQ47BzkCHn0FgN4L20BFaTue1ihh-nZq2ZmKO6c9kDFp1DC7Fl4arTEXSVZHfMNj8KQ/exec";
+    "https://script.google.com/macros/s/AKfycbwy21GIBnSdcB6bnYUUwdOJZ4okg_Z7dD0B-TFx3ellfyoLZFNdR88mT7uMoDN7sZmD3g/exec";
 
 
 /* =========================================
    FORMULAIRE D'ADHÉSION
    GOOGLE SHEETS + WHATSAPP
 ========================================= */
+
 function envoyerAdhesion(event) {
 
     event.preventDefault();
 
+    // Récupération des informations
+    const nom =
+        document.getElementById("nom").value.trim();
+
+    const telephone =
+        document.getElementById("telephone").value.trim();
+
+    const village =
+        document.getElementById("village").value.trim();
+
+    const profession =
+        document.getElementById("profession").value.trim();
+
+    const sexe =
+        document.getElementById("sexe").value;
+
+    const age =
+        document.getElementById("age").value;
+
+    const domaine =
+        document.getElementById("domaine").value;
+
+    const terrainElement =
+        document.querySelector(
+            'input[name="terrain"]:checked'
+        );
+
+    const terrain =
+        terrainElement
+            ? terrainElement.value
+            : "Non précisé";
+
+    const benevoleElement =
+        document.querySelector(
+            'input[name="benevole"]:checked'
+        );
+
+    const benevole =
+        benevoleElement
+            ? benevoleElement.value
+            : "Non précisé";
+
+    const message =
+        document.getElementById("message").value.trim();
+
+
+    // =========================================
+    // DONNÉES À ENVOYER À GOOGLE SHEETS
+    // =========================================
+
     const donnees = {
-        nom: document.getElementById("nom").value.trim(),
-        telephone: document.getElementById("telephone").value.trim(),
-        village: document.getElementById("village").value.trim(),
-        profession: document.getElementById("profession").value.trim(),
-        sexe: document.getElementById("sexe").value,
-        age: document.getElementById("age").value,
-        domaine: document.getElementById("domaine").value,
-        terrain: document.querySelector('input[name="terrain"]:checked')?.value || "",
-        benevole: document.querySelector('input[name="benevole"]:checked')?.value || "",
-        message: document.getElementById("message").value.trim()
+
+        nom: nom,
+
+        telephone: telephone,
+
+        village: village,
+
+        profession: profession,
+
+        sexe: sexe,
+
+        age: age,
+
+        domaine: domaine,
+
+        terrain: terrain,
+
+        benevole: benevole,
+
+        message: message
+
     };
-
-    const url = "https://script.google.com/macros/s/AKfycbxVQ47BzkCHn0FgN4L20BFaTue1ihh-nZq2ZmKO6c9kDFp1DC7Fl4arTEXSVZHfMNj8KQ/exec";
-
-    fetch(url, {
-        method: "POST",
-        body: JSON.stringify(donnees)
-    })
-    .then(function() {
-
-        alert("✅ Adhésion envoyée avec succès !");
-
-        document.getElementById("formAdhesion").reset();
-
-    })
-    .catch(function(erreur) {
-
-        console.error(erreur);
-
-        alert("❌ Impossible d'envoyer l'adhésion.");
-
-    });
-
-}
-
-   
-    
-
-   
-       
 
 
     // =========================================
     // ENVOI VERS GOOGLE SHEETS
     // =========================================
 
-    const googleScriptURL =
-        "https://script.google.com/macros/s/AKfycbxVQ47BzkCHn0FgN4L20BFaTue1ihh-nZq2ZmKO6c9kDFp1DC7Fl4arTEXSVZHfMNj8KQ/exec";
-
-
-    const donnees = {
-        nom: nom,
-        telephone: telephone,
-        village: village,
-        profession: profession,
-        sexe: sexe,
-        age: age,
-        domaine: domaine,
-        terrain: terrain,
-        benevole: benevole,
-        message: message
-    };
-
-
-    fetch(googleScriptURL, {
+    fetch(URL_GOOGLE_SHEETS, {
 
         method: "POST",
 
-        mode: "no-cors",
-
-        headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-        },
-
         body: JSON.stringify(donnees)
+
+    })
+    .then(function() {
+
+        console.log(
+            "Adhésion envoyée vers Google Sheets"
+        );
+
+    })
+    .catch(function(erreur) {
+
+        console.error(
+            "Erreur Google Sheets :",
+            erreur
+        );
 
     });
 
@@ -104,44 +128,78 @@ function envoyerAdhesion(event) {
     // ENVOI VERS WHATSAPP
     // =========================================
 
-    const numero = "221773189802";
+    const numero =
+        "221773189802";
+
 
     const texte =
+
         "📝 NOUVELLE ADHÉSION\n\n" +
-        "👤 Nom et prénom : " + nom + "\n" +
-        "📞 Téléphone : " + telephone + "\n" +
-        "📍 Village / Quartier : " + village + "\n" +
-        "💼 Profession : " + profession + "\n" +
-        "⚧ Sexe : " + sexe + "\n" +
-        "🎂 Tranche d'âge : " + age + "\n" +
-        "🤝 Domaine : " + domaine + "\n" +
-        "🚶 Activités de terrain : " + terrain + "\n" +
-        "🙋 Bénévole : " + benevole + "\n" +
-        "💬 Message : " + message;
+
+        "👤 Nom et prénom : " +
+        nom + "\n" +
+
+        "📞 Téléphone : " +
+        telephone + "\n" +
+
+        "📍 Village / Quartier : " +
+        village + "\n" +
+
+        "💼 Profession : " +
+        profession + "\n" +
+
+        "⚧ Sexe : " +
+        sexe + "\n" +
+
+        "🎂 Tranche d'âge : " +
+        age + "\n" +
+
+        "🤝 Domaine : " +
+        domaine + "\n" +
+
+        "🚶 Activités de terrain : " +
+        terrain + "\n" +
+
+        "🙋 Bénévole : " +
+        benevole + "\n" +
+
+        "💬 Message : " +
+        message;
 
 
-    const url =
+    const urlWhatsApp =
+
         "https://wa.me/" +
+
         numero +
+
         "?text=" +
+
         encodeURIComponent(texte);
 
 
-    window.open(url, "_blank");
+    window.open(
+        urlWhatsApp,
+        "_blank"
+    );
 
 
-    // Message de confirmation
+    // =========================================
+    // MESSAGE DE CONFIRMATION
+    // =========================================
 
     setTimeout(function() {
 
         alert(
-            "✅ Votre adhésion a été enregistrée.\n\n" +
+            "✅ Votre adhésion a été envoyée.\n\n" +
             "Merci pour votre participation."
         );
 
     }, 1000);
 
 }
+
+
 /* =========================================
    BOUTON RETOUR EN HAUT
 ========================================= */
@@ -165,7 +223,9 @@ function remonter() {
 
 function modeSombre() {
 
-    document.body.classList.toggle("sombre");
+    document.body.classList.toggle(
+        "sombre"
+    );
 
 }
 
@@ -184,7 +244,6 @@ if (compteur) {
 
     const objectif = 500;
 
-
     const intervalle =
         setInterval(function() {
 
@@ -192,7 +251,6 @@ if (compteur) {
 
             compteur.textContent =
                 nombre;
-
 
             if (nombre >= objectif) {
 
@@ -215,8 +273,6 @@ let photosGalerie = [];
 
 let photoActuelle = 0;
 
-
-/* Récupération des photos */
 
 const imagesGalerie =
     document.querySelectorAll(
@@ -388,7 +444,9 @@ function photoPrecedente() {
     photoActuelle--;
 
 
-    if (photoActuelle < 0) {
+    if (
+        photoActuelle < 0
+    ) {
 
         photoActuelle =
             photosGalerie.length - 1;
@@ -422,8 +480,9 @@ document.addEventListener(
     "keydown",
     function(event) {
 
-
-        if (event.key === "Escape") {
+        if (
+            event.key === "Escape"
+        ) {
 
             fermerGalerie();
 
@@ -431,8 +490,7 @@ document.addEventListener(
 
 
         if (
-            event.key ===
-            "ArrowRight"
+            event.key === "ArrowRight"
         ) {
 
             photoSuivante();
@@ -441,8 +499,7 @@ document.addEventListener(
 
 
         if (
-            event.key ===
-            "ArrowLeft"
+            event.key === "ArrowLeft"
         ) {
 
             photoPrecedente();
