@@ -16,33 +16,51 @@ const URL_GOOGLE_SHEETS =
    FORMULAIRE D'ADHÉSION
    GOOGLE SHEETS + WHATSAPP
 ========================================= */
-
 function envoyerAdhesion(event) {
 
     event.preventDefault();
 
-    const nom = document.getElementById("nom").value.trim();
-    const telephone = document.getElementById("telephone").value.trim();
-    const village = document.getElementById("village").value.trim();
-    const profession = document.getElementById("profession").value.trim();
-    const sexe = document.getElementById("sexe").value;
-    const age = document.getElementById("age").value;
-    const domaine = document.getElementById("domaine").value;
-    const message = document.getElementById("message").value.trim();
+    const donnees = {
+        nom: document.getElementById("nom").value.trim(),
+        telephone: document.getElementById("telephone").value.trim(),
+        village: document.getElementById("village").value.trim(),
+        profession: document.getElementById("profession").value.trim(),
+        sexe: document.getElementById("sexe").value,
+        age: document.getElementById("age").value,
+        domaine: document.getElementById("domaine").value,
+        terrain: document.querySelector('input[name="terrain"]:checked')?.value || "",
+        benevole: document.querySelector('input[name="benevole"]:checked')?.value || "",
+        message: document.getElementById("message").value.trim()
+    };
 
-    const terrainElement =
-        document.querySelector('input[name="terrain"]:checked');
+    const url = "https://script.google.com/macros/s/AKfycbxVQ47BzkCHn0FgN4L20BFaTue1ihh-nZq2ZmKO6c9kDFp1DC7Fl4arTEXSVZHfMNj8KQ/exec";
 
-    const terrain = terrainElement
-        ? terrainElement.value
-        : "Non précisé";
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(donnees)
+    })
+    .then(function() {
 
-    const benevoleElement =
-        document.querySelector('input[name="benevole"]:checked');
+        alert("✅ Adhésion envoyée avec succès !");
 
-    const benevole = benevoleElement
-        ? benevoleElement.value
-        : "Non précisé";
+        document.getElementById("formAdhesion").reset();
+
+    })
+    .catch(function(erreur) {
+
+        console.error(erreur);
+
+        alert("❌ Impossible d'envoyer l'adhésion.");
+
+    });
+
+}
+
+   
+    
+
+   
+       
 
 
     // =========================================
