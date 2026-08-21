@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Liste des adhérents | Dioulacolon</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f4f6f8;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .recherche {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .resultats {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .carte {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .numero {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .message {
+            text-align: center;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>👥 Adhérents - Dioulacolon</h1>
+
+<div class="recherche">
+    <input
+        type="text"
+        id="recherche"
+        placeholder="🔎 Rechercher par nom, téléphone, village ou N° adhérent..."
+        oninput="rechercher()"
+    >
+</div>
+
+<div id="resultats" class="resultats">
+    <p class="message">Chargement des adhérents...</p>
+</div>
+
+
+<script>
+
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbzK8xG6FG8oAtLQkXvEezssHxsUIe8aly6CFH_OeY30h8iifdkVsuia8KGh2D5YYn5VWg/exec";
+
+let adherents = [];
+
+
+fetch(GOOGLE_SCRIPT_URL)
+.then(response => response.json())
+.then(data => {
+
+    adherents = data;
+
+    afficher(adherents);
+
+})
+.catch(erreur => {
+
+    console.error(erreur);
+
+    document.getElementById("resultats").innerHTML =
+        "<p class='message'>❌ Impossible de charger les adhérents.</p>";
+
+});
+
+
+function rechercher() {
+
+    const texte =
+        document.getElementById("recherche")
+        .value
+        .toLowerCase()
+        .trim();
+
+    if (texte === "") {
+
+        afficher(adherents);
+
+        return;
+    }
+
+    const resultats =
+        adherents.filter((ligne, index) => {
+
+            if (index === 0) {
+                return false;
+            }
+
+            return ligne.some(cellule =>
+                String(cellule)
+                .toLowerCase()
+                .includes(texte)
+            );
+
+        });
+
+    afficher(resultats);
+
+}
+
+
+function afficher(liste) {
+
+    const zone =
+        document.getElementById("resultats");
+
+    if (liste.length <= 1) {
+
+        zone.innerHTML =
+            "<p class='message'>Aucun adhérent trouvé.</p>";
+
+        return;
+    }
+
+    zone.innerHTML = "";
+
+    liste.forEach((ligne, index) => {
+
+        if (index === 0) {
+            return;
+        }
+
+        const carte =
+            document.createElement("div");
+
+        carte.className = "carte";
+
+        carte.innerHTML = `
+
+            <div class="numero">
+                🔢 ${ligne[0] || ""}
+            </div>
+
+            <p>📅 Date : ${ligne[1] || ""}</p>
+
+            <p>👤 Nom : ${ligne[2] || ""}</p>
+
+            <p>📞 Téléphone : ${ligne[3] || ""}</p>
+
+            <p>📍 Village : ${ligne[4] || ""}</p>
+
+            <p>💼 Profession : ${ligne[5] || ""}</p>
+
+            <p>⚧ Sexe : ${ligne[6] || ""}</p>
+
+            <p>🎂 Âge : ${ligne[7] || ""}</p>
+
+            <p>🤝 Domaine : ${ligne[8] || ""}</p>
+
+            <p>🚶 Terrain : ${ligne[9] || ""}</p>
+
+            <p>🙋 Bénévole : ${ligne[10] || ""}</p>
+
+            <p>💬 Message : ${ligne[11] || ""}</p>
+
+        `;
+
+        zone.appendChild(carte);
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
