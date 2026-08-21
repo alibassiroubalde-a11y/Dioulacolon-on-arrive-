@@ -22,7 +22,6 @@ function envoyerAdhesion(event) {
     const domaine = document.getElementById("domaine").value || "Non précisé";
     const message = document.getElementById("message").value.trim() || "Aucun message";
 
-    // Activités de terrain
     const terrainElement =
         document.querySelector('input[name="terrain"]:checked');
 
@@ -30,13 +29,49 @@ function envoyerAdhesion(event) {
         ? terrainElement.value
         : "Non précisé";
 
-    // Bénévole
     const benevoleElement =
         document.querySelector('input[name="benevole"]:checked');
 
     const benevole = benevoleElement
         ? benevoleElement.value
         : "Non précisé";
+
+
+    /* =========================================
+       GOOGLE SHEETS
+    ========================================= */
+
+    const googleScriptURL =
+        "https://script.google.com/macros/s/AKfycbzK8xG6FG8oAtLQkXvEezssHxsUIe8aly6CFH_OeY30h8iifdkVsuia8KGh2D5YYn5VWg/exec";
+
+
+    const donnees = {
+        nom: nom,
+        telephone: telephone,
+        village: village,
+        profession: profession,
+        sexe: sexe,
+        age: age,
+        domaine: domaine,
+        terrain: terrain,
+        benevole: benevole,
+        message: message
+    };
+
+
+    fetch(googleScriptURL, {
+
+        method: "POST",
+
+        mode: "no-cors",
+
+        headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+        },
+
+        body: JSON.stringify(donnees)
+
+    });
 
 
     /* =========================================
@@ -66,14 +101,12 @@ function envoyerAdhesion(event) {
         encodeURIComponent(texte);
 
 
-    // Ouvrir WhatsApp
+    // Ouvre WhatsApp
     window.open(whatsappURL, "_blank");
 
 
-    // Message de confirmation
-    alert(
-        "✅ Les informations sont prêtes à être envoyées sur WhatsApp."
-    );
+    // Réinitialise le formulaire
+    document.getElementById("formAdhesion").reset();
 
 }
 
