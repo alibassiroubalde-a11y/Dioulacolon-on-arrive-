@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Liste des adhérents | Dioulacolon</title>
+    <title>Adhérents | Dioulacolon</title>
 
     <style>
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -19,28 +20,72 @@
             text-align: center;
         }
 
+        /* CONNEXION */
+
+        #connexion {
+            max-width: 400px;
+            margin: 80px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        #connexion input {
+            width: 100%;
+            padding: 14px;
+            box-sizing: border-box;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        #connexion button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #1b7f3a;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #erreur {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* PAGE ADHERENTS */
+
+        #pageAdherents {
+            display: none;
+        }
+
         .recherche {
             max-width: 600px;
             margin: 20px auto;
         }
 
-        input {
+        .recherche input {
             width: 100%;
             padding: 15px;
-            font-size: 16px;
             box-sizing: border-box;
+            font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 8px;
         }
 
         .resultats {
-            max-width: 1000px;
+            max-width: 900px;
             margin: auto;
         }
 
         .carte {
             background: white;
-            padding: 15px;
+            padding: 18px;
             margin-bottom: 15px;
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -48,60 +93,207 @@
 
         .numero {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
+            margin-bottom: 10px;
         }
 
         .message {
             text-align: center;
             margin: 20px;
         }
+
+        .deconnexion {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #c62828;
+            color: white;
+            cursor: pointer;
+        }
+
     </style>
+
 </head>
 
 <body>
 
-<h1>👥 Adhérents - Dioulacolon</h1>
 
-<div class="recherche">
+<!-- =========================
+     CONNEXION
+========================= -->
+
+<div id="connexion">
+
+    <h2>🔐 Accès aux adhérents</h2>
+
+    <p>
+        Cette page est réservée à l'administration.
+    </p>
+
     <input
-        type="text"
-        id="recherche"
-        placeholder="🔎 Rechercher par nom, téléphone, village ou N° adhérent..."
-        oninput="rechercher()"
+        type="password"
+        id="motDePasse"
+        placeholder="Entrez le mot de passe"
     >
+
+    <button onclick="connexion()">
+        🔓 Se connecter
+    </button>
+
+    <p id="erreur"></p>
+
 </div>
 
-<div id="resultats" class="resultats">
-    <p class="message">Chargement des adhérents...</p>
+
+<!-- =========================
+     PAGE ADHERENTS
+========================= -->
+
+<div id="pageAdherents">
+
+    <h1>👥 Adhérents - Dioulacolon</h1>
+
+    <button
+        class="deconnexion"
+        onclick="deconnexion()">
+
+        🔒 Se déconnecter
+
+    </button>
+
+
+    <div class="recherche">
+
+        <input
+            type="text"
+            id="recherche"
+            placeholder="🔎 Rechercher par nom, téléphone, village ou N° adhérent..."
+            oninput="rechercher()"
+        >
+
+    </div>
+
+
+    <div id="resultats" class="resultats">
+
+        <p class="message">
+            Chargement des adhérents...
+        </p>
+
+    </div>
+
 </div>
 
 
 <script>
 
+
+/* =========================================
+   MOT DE PASSE
+========================================= */
+
+const MOT_DE_PASSE = "Ramousse89";
+
+
+/* =========================================
+   URL GOOGLE APPS SCRIPT
+========================================= */
+
 const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbzK8xG6FG8oAtLQkXvEezssHxsUIe8aly6CFH_OeY30h8iifdkVsuia8KGh2D5YYn5VWg/exec";
+
 
 let adherents = [];
 
 
-fetch(GOOGLE_SCRIPT_URL)
-.then(response => response.json())
-.then(data => {
+/* =========================================
+   CONNEXION
+========================================= */
 
-    adherents = data;
+function connexion() {
 
-    afficher(adherents);
+    const motDePasse =
+        document.getElementById("motDePasse").value;
 
-})
-.catch(erreur => {
+    if (motDePasse === MOT_DE_PASSE) {
 
-    console.error(erreur);
+        document.getElementById("connexion")
+            .style.display = "none";
 
-    document.getElementById("resultats").innerHTML =
-        "<p class='message'>❌ Impossible de charger les adhérents.</p>";
+        document.getElementById("pageAdherents")
+            .style.display = "block";
 
-});
+        chargerAdherents();
 
+    } else {
+
+        document.getElementById("erreur")
+            .textContent =
+            "❌ Mot de passe incorrect.";
+
+    }
+
+}
+
+
+/* =========================================
+   DECONNEXION
+========================================= */
+
+function deconnexion() {
+
+    document.getElementById("pageAdherents")
+        .style.display = "none";
+
+    document.getElementById("connexion")
+        .style.display = "block";
+
+    document.getElementById("motDePasse")
+        .value = "";
+
+}
+
+
+/* =========================================
+   CHARGER GOOGLE SHEETS
+========================================= */
+
+function chargerAdherents() {
+
+    fetch(GOOGLE_SCRIPT_URL)
+
+        .then(function(response) {
+
+            return response.json();
+
+        })
+
+        .then(function(data) {
+
+            adherents = data;
+
+            afficher(adherents);
+
+        })
+
+        .catch(function(erreur) {
+
+            console.error(erreur);
+
+            document.getElementById("resultats")
+                .innerHTML =
+                "<p class='message'>❌ Impossible de charger les adhérents.</p>";
+
+        });
+
+}
+
+
+/* =========================================
+   RECHERCHE
+========================================= */
 
 function rechercher() {
 
@@ -111,37 +303,51 @@ function rechercher() {
         .toLowerCase()
         .trim();
 
+
     if (texte === "") {
 
         afficher(adherents);
 
         return;
+
     }
 
+
     const resultats =
-        adherents.filter((ligne, index) => {
+        adherents.filter(function(ligne, index) {
 
             if (index === 0) {
+
                 return false;
+
             }
 
-            return ligne.some(cellule =>
-                String(cellule)
-                .toLowerCase()
-                .includes(texte)
-            );
+
+            return ligne.some(function(cellule) {
+
+                return String(cellule)
+                    .toLowerCase()
+                    .includes(texte);
+
+            });
 
         });
+
 
     afficher(resultats);
 
 }
 
 
+/* =========================================
+   AFFICHER LES ADHERENTS
+========================================= */
+
 function afficher(liste) {
 
     const zone =
         document.getElementById("resultats");
+
 
     if (liste.length <= 1) {
 
@@ -149,20 +355,27 @@ function afficher(liste) {
             "<p class='message'>Aucun adhérent trouvé.</p>";
 
         return;
+
     }
+
 
     zone.innerHTML = "";
 
-    liste.forEach((ligne, index) => {
+
+    liste.forEach(function(ligne, index) {
 
         if (index === 0) {
+
             return;
+
         }
+
 
         const carte =
             document.createElement("div");
 
         carte.className = "carte";
+
 
         carte.innerHTML = `
 
@@ -194,13 +407,16 @@ function afficher(liste) {
 
         `;
 
+
         zone.appendChild(carte);
 
     });
 
 }
 
+
 </script>
 
 </body>
+
 </html>
