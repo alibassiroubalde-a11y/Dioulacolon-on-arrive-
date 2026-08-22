@@ -43,7 +43,7 @@ function envoyerAdhesion(event) {
 
    const googleScriptURL =
     "https://script.google.com/macros/s/AKfycbzHLMGbin51gYuBhYG72K14rmA1GGsJOnMpTrKiqroaRzs80cr5qglbb3In-0lwtecPdw/exec";
-
+   
     const donnees = {
         nom: nom,
         telephone: telephone,
