@@ -41,9 +41,8 @@ function envoyerAdhesion(event) {
        GOOGLE SHEETS
     ========================================= */
 
-    const googleScriptURL =
-        "https://script.google.com/macros/s/AKfycbzK8xG6FG8oAtLQkXvEezssHxsUIe8aly6CFH_OeY30h8iifdkVsuia8KGh2D5YYn5VWg/exec";
-
+   const googleScriptURL =
+    "https://script.google.com/macros/s/AKfycbzHLMGbin51gYuBhYG72K14rmA1GGsJOnMpTrKiqroaRzs80cr5qglbb3In-0lwtecPdw/exec";
 
     const donnees = {
         nom: nom,
