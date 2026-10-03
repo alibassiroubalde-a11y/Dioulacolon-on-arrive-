@@ -20,13 +20,13 @@ body {
 }
 
 .photo-profil {
-   width: 1200px;
+   width: 300px;
       height: auto;
       object-fit: contain;
 object-position: center;
    border-radius: ;
    display: block;
-   margin:20px auto;
+   margin:50px auto;
    }
    
 
