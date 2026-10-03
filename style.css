@@ -280,11 +280,11 @@ object-position: center;
 ========================================= */
 
 .photo-profil {
-    width: 200px;
+    width: 300px;
 
-    height: 200px;
+    height: auto;
 
-    object-fit: cover;
+    object-fit: unset;
 
     border-radius: 0;
 
