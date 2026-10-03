@@ -284,7 +284,7 @@ object-position: center;
 
     height: auto;
 
-    object-fit: unset;
+    object-fit: contain;
 
     border-radius: 0;
 
